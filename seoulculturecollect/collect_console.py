@@ -10,9 +10,9 @@ from seoulculturecollect import Console
 
 
 class ConsoleCollect(Console):
-    def main(self, area_code):
-        if area_code:
-            area_code_list = [area_code]
+    def main(self, input_area_code):
+        if input_area_code:
+            area_code_list = [input_area_code]
         else:
             area_code_dict = json.load(open('resource/area_code.json', 'r', encoding='utf-8'))
             area_code_list = area_code_dict.keys()
@@ -55,7 +55,7 @@ class ConsoleCollect(Console):
         }
 
         # 3항연산자
-        collect_file_name = f'resource/{area_code}_event_list.json' if area_code else 'resource/event_list.json'
+        collect_file_name = f'resource/{input_area_code}_event_list.json' if input_area_code else 'resource/event_list.json'
 
         # json 파일로 저장 (* 이미 파일이 있으면 덮어쓰기
         with open(collect_file_name, 'w', encoding='utf-8') as f:
