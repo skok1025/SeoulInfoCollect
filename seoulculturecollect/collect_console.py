@@ -10,9 +10,9 @@ from seoulculturecollect import Console
 
 
 class ConsoleCollect(Console):
-    def main(self, input_area_code):
-        if input_area_code:
-            area_code_list = [input_area_code]
+    def main(self, area_code):
+        if area_code:
+            area_code_list = [area_code]
         else:
             area_code_dict = json.load(open('resource/area_code.json', 'r', encoding='utf-8'))
             area_code_list = area_code_dict.keys()
@@ -39,12 +39,10 @@ class ConsoleCollect(Console):
 
             if type(EVENT_STTS) == dict:
                 EVENT_STTS['EVENT_AREA_CODE'] = area_code
-                EVENT_STTS['EVENT_START_DATE'], EVENT_STTS['EVENT_END_DATE'] = EVENT_STTS['EVENT_PERIOD'].split('~')
                 all_event_list.append(EVENT_STTS)
             elif type(EVENT_STTS) == list:
                 for event in EVENT_STTS:
                     event['EVENT_AREA_CODE'] = area_code
-                    event['EVENT_START_DATE'], event['EVENT_END_DATE'] = event['EVENT_PERIOD'].split('~')
                     all_event_list.append(event)
             else:
                 pass
@@ -56,7 +54,8 @@ class ConsoleCollect(Console):
             'all_event_list': all_event_list
         }
 
-        collect_file_name = f'resource/{input_area_code}_event_list.json' if input_area_code else 'resource/event_list.json'
+        # 3항연산자
+        collect_file_name = f'resource/{area_code}_event_list.json' if area_code else 'resource/event_list.json'
 
         # json 파일로 저장 (* 이미 파일이 있으면 덮어쓰기
         with open(collect_file_name, 'w', encoding='utf-8') as f:
@@ -67,7 +66,7 @@ class ConsoleCollect(Console):
 @click.option("--area_code", help="지역코드")
 def cli(area_code):
     console = ConsoleCollect()
-    console.main(input_area_code=area_code)
+    console.main(area_code=area_code)
 
 
 if __name__ == '__main__':
