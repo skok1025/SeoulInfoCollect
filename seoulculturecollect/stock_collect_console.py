@@ -39,7 +39,7 @@ class StockConsoleCollect(Console):
             "DOW": "DJI@DJI"
         }
         symbol = code_symbol_dict[code]
-        url = f"https://finance.naver.com/world/sise.naver?symbol={symbol}"
+        url = "https://finance.naver.com/world/sise.naver?symbol=" + symbol
         result = requests.get(url)
         bs_obj = BeautifulSoup(result.content, "html.parser")
 
